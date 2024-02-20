@@ -2,25 +2,30 @@ import axios from 'axios';
 import { useFormik } from 'formik';
 import React from 'react';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import { baseApiUrl } from '../helper';
+import useAPIData from '../hooks/useAPIData';
 import { useAuthContext } from '../store/AuthCtxtProvider';
 
-export default function CreateNewFund() {
+export default function EditFund() {
   const navigate = useNavigate();
+
+  const { idea_id } = useParams();
+
+  const [idea, setIdea] = useAPIData(`${baseApiUrl}/funds/${idea_id}`);
 
   const { token } = useAuthContext();
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      img_url: '',
-      idea_name: '',
-      author_name: '',
-      description: '',
-      rise_funds: '',
+      img_url: idea.img_url ?? '',
+      idea_name: idea.idea_name ?? '',
+      author_name: idea.author_name ?? '',
+      description: idea.description ?? '',
+      rise_funds: idea.rise_funds ?? '',
     },
     validationSchema: Yup.object({
       img_url: Yup.string().min(3).max(255),
@@ -30,24 +35,24 @@ export default function CreateNewFund() {
       rise_funds: Yup.string().min(2).max(4).required('Rising fund is required field'),
     }),
     onSubmit: (values) => {
-      sendFundData(values);
+      sendFundUpdateData(values);
     },
   });
 
-  function sendFundData(data) {
+  function sendFundUpdateData(data) {
     axios
-      .post(`${baseApiUrl}funds`, data, {
+      .put(`${baseApiUrl}funds/${idea_id}`, data, {
         headers: { Authorization: token },
       })
       .then((resp) => {
         navigate('/funds');
-        toast.success('New fund created successfuly');
+        toast.success('Fund edited successfuly');
       })
       .catch((error) => toast.error(error.resp));
   }
   return (
     <div className="container mx-5 my-5 ">
-      <h1 className="text-4xl mb-4 ">Add New Fund</h1>
+      <h1 className="text-4xl mb-4 ">Edit Fund</h1>
       <div className="max-w-96 mt-4 border-2 border-green-300 rounded-md p-4 flex justify-center">
         <form onSubmit={formik.handleSubmit}>
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8">

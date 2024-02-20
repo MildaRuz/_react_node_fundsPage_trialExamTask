@@ -1,5 +1,6 @@
 import '../index.css';
 
+import axios from 'axios';
 import React from 'react';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -18,18 +19,18 @@ export default function FundsList() {
   const navigate = useNavigate();
 
   function handleDelete(id) {
-    const currentUrl = `${booksUrl}/${id}`;
+    const currentUrl = `${fundsUrl}/${id}`;
     axios
       .delete(currentUrl, {
         headers: { Authorization: token },
       })
       .then((ats) => {
         // console.log('ats ===', ats);
-        console.log('list', bookList);
+        console.log('list', fundsList);
         console.log('ats.data ===', ats.data);
-        setBookList(bookList.filter((book) => book.book_id !== id));
-        navigate('/books', { replace: true });
-        toast.success(`Book is deleted`);
+        setFundsList(fundsList.filter((fund) => fund.idea_id !== id));
+        navigate('/funds', { replace: true });
+        toast.success(`Fund is deleted`);
       })
       .catch((error) => {
         console.warn('handleDelete ivyko klaida:', error);

@@ -26,6 +26,7 @@ export default function Header() {
           <NavLink className="px-3 py-2 hover:bg-green-300" to={'/create-fund'}>
             Add New Fund
           </NavLink>
+
           {!isUserLoggedIn && (
             <>
               <NavLink className="px-3 py-2 hover:bg-green-300" to={'/auth/login'}>
