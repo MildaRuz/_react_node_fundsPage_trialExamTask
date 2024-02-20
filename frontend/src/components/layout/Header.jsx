@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 
 import { useAuthContext } from '../../store/AuthCtxtProvider';
 
@@ -8,9 +8,10 @@ export default function Header() {
 
   const navigate = useNavigate();
 
-  // function handleLogout() {
-  //   logout();
-  //   navigate('/login');
+  function handleLogout() {
+    logout();
+    navigate('/login');
+  }
 
   return (
     <div className="bg-green-100">
@@ -25,9 +26,27 @@ export default function Header() {
           <NavLink className="px-3 py-2 hover:bg-green-300" to={'/create-fund'}>
             Add New Fund
           </NavLink>
-          <NavLink className="px-3 py-2 hover:bg-green-300" to={'/login'}>
-            LogIn
-          </NavLink>
+          {!isUserLoggedIn && (
+            <>
+              <NavLink className="px-3 py-2 hover:bg-green-300" to={'/auth/login'}>
+                LogIn
+              </NavLink>
+              <NavLink className="px-3 py-2 hover:bg-green-300" to={'/auth/register'}>
+                Register
+              </NavLink>
+            </>
+          )}
+
+          {isUserLoggedIn && (
+            <>
+              <button onClick={handleLogout} className={'px-3 py-2 hover:bg-green-300'}>
+                Logout
+              </button>
+              <Link className="text-green-400 disabled" to={'/funds'}>
+                <>{user.name}</> <>({user.scope})</>
+              </Link>
+            </>
+          )}
         </>
       </header>
     </div>

@@ -13,31 +13,34 @@ export default function FundsList() {
   const [fundsList, setFundsList] = useAPIData(fundsUrl);
   const [filterValue, setFilterValue] = useState('');
 
-  const { isUserAdmin, isUserLoggedIn, token } = useAuthContext();
+  const { isUserAdmin, token } = useAuthContext();
 
   const navigate = useNavigate();
 
-  // function handleDelete(id) {
-  //   const currentUrl = `${booksUrl}/${id}`;
-  //   axios
-  //     .delete(currentUrl, {
-  //       headers: { Authorization: token },
-  //     })
-  //     .then((ats) => {
-  //       // console.log('ats ===', ats);
-  //       console.log('list', bookList);
-  //       console.log('ats.data ===', ats.data);
-  //       setBookList(bookList.filter((book) => book.book_id !== id));
-  //       navigate('/books', { replace: true });
-  //       toast.success(`Book is deleted`);
-  //     })
-  //     .catch((error) => {
-  //       console.warn('handleDelete ivyko klaida:', error);
-  //       console.warn('handleDelete ivyko klaida:', error.response);
-  //     });
-  // }
+  function handleDelete(id) {
+    const currentUrl = `${booksUrl}/${id}`;
+    axios
+      .delete(currentUrl, {
+        headers: { Authorization: token },
+      })
+      .then((ats) => {
+        // console.log('ats ===', ats);
+        console.log('list', bookList);
+        console.log('ats.data ===', ats.data);
+        setBookList(bookList.filter((book) => book.book_id !== id));
+        navigate('/books', { replace: true });
+        toast.success(`Book is deleted`);
+      })
+      .catch((error) => {
+        console.warn('handleDelete ivyko klaida:', error);
+        console.warn('handleDelete ivyko klaida:', error.response);
+      });
+  }
   function handleDonate(id) {
     navigate(`/donate-fund/${id}`);
+  }
+  function handleEdit(id) {
+    navigate(`/edit-fund/${id}`);
   }
 
   // const filteredFunds = useMemo(() => {
@@ -85,17 +88,27 @@ export default function FundsList() {
                   onClick={() => handleDonate(fund.donated)}
                   className="bg-green-400 hover:bg-green-700 text-green-950 font-bold py-2 px-4 rounded-md"
                 >
-                  Donate to this fund
+                  Donate
                 </button>
               </div>
-              {/* {isUserAdmin && (
+              {isUserAdmin && (
+                <>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => handleEdit(fund.idea_id)}
+                      className="bg-green-400 hover:bg-green-700 text-green-950 font-bold mt-2 py-2 px-4 rounded-md"
+                    >
+                      Edit info
+                    </button>
+                  </div>
                   <button
-                    onClick={() => handleDelete(idea.idea_id)}
-                    className="bg-red-400 hover:bg-red-700 text-red-950 font-bold py-2 px-3 rounded-md"
+                    onClick={() => handleDelete(fund.idea_id)}
+                    className="bg-red-400 hover:bg-red-700 text-red-950 font-bold mt-2 py-2 px-3 rounded-md"
                   >
                     Delete
                   </button>
-                )} */}
+                </>
+              )}
             </div>
           </div>
         ))}

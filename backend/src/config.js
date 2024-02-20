@@ -6,8 +6,11 @@ const dbConfig = {
   port: process.env.DB_PORT,
 };
 
-console.log('dbConfig ===', dbConfig);
+const jwtSecret = process.env.JWT_SECRET;
+
+//console.log('dbConfig ===', dbConfig);
 
 module.exports = {
   dbConfig,
+  jwtSecret,
 };

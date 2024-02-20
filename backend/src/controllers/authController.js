@@ -1,14 +1,14 @@
 const bcrypt = require('bcrypt');
-const { executeQuery, signJWTToken } = require('../../helpers');
+const { makeSqlQuery, signJWTToken } = require('../helpers');
 
 const jwt = require('jsonwebtoken');
-const { jwtSecret } = require('../../config');
+const { jwtSecret } = require('../config');
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
 
   const sql = 'SELECT * FROM users WHERE email=?';
-  const [rowsArr, error] = await executeQuery(sql, [email]);
+  const [rowsArr, error] = await makeSqlQuery(sql, [email]);
 
   if (error) {
     console.log('login error ===');
@@ -31,6 +31,7 @@ const login = async (req, res, next) => {
     sub: userFound.id,
     user: {
       id: userFound.id,
+      name: userFound.name,
       email: userFound.email,
       scope: userFound.scope,
     },
@@ -44,13 +45,13 @@ const login = async (req, res, next) => {
 };
 
 const register = async (req, res, next) => {
-  const { email, password } = req.body;
+  const { name, email, password } = req.body;
 
   const passwordHash = bcrypt.hashSync(password, 10);
 
-  const sql = "INSERT INTO `users` (`email`, `password`, `scope`) VALUES (?, ?, 'manager')";
+  const sql = "INSERT INTO `users` (`name`, `email`, `password`, `scope`) VALUES (?, ?, ?, 'manager')";
 
-  const [resObj, error] = await executeQuery(sql, [email, passwordHash]);
+  const [resObj, error] = await makeSqlQuery(sql, [name, email, passwordHash]);
 
   if (error) {
     console.log('register error ====');

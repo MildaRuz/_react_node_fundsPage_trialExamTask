@@ -7,7 +7,7 @@ async function makeSqlQuery(sql, argArr = []) {
   let connection;
   try {
     connection = await mysql.createConnection(dbConfig);
-    console.log('connnn aaaaa', connection);
+    console.log('connnn =====', connection);
     const [rows] = await connection.execute(sql, argArr);
     return [rows, null];
   } catch (error) {
@@ -17,20 +17,20 @@ async function makeSqlQuery(sql, argArr = []) {
   }
 }
 
-function makeJWTToken(data, expires = '1h') {
-  if (!jwtSecret) throw new Error('no secret provided');
+function signJWTToken(data, expires = '1h') {
+  if (!jwtSecret) throw new Error('No secret provided');
 
   return jwt.sign(data, jwtSecret, { expiresIn: expires });
 }
 
 function parseJWTToken(token) {
-  if (!jwtSecret) throw new Error('no secret provided');
+  if (!jwtSecret) throw new Error('No secret provided');
 
   return jwt.decode(token);
 }
 
 module.exports = {
   makeSqlQuery,
-  makeJWTToken,
+  signJWTToken,
   parseJWTToken,
 };

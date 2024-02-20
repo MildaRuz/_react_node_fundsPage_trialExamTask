@@ -5,6 +5,7 @@ import React from 'react';
 const AuthContext = createContext({
   token: '',
   funds: {},
+  user: {},
   login(author_name, token) {},
   logout() {},
   isUserLoggedIn: false,
@@ -17,6 +18,7 @@ export default function AuthCtxProvider({ children }) {
   const [authState, setAuthState] = useState({
     token: '',
     funds: {},
+    user: {},
   });
 
   function login(email, token) {
@@ -27,6 +29,7 @@ export default function AuthCtxProvider({ children }) {
       token,
       email,
       funds: tokenData.funds,
+      user: tokenData.user,
     });
 
     localStorage.setItem('token', token);
@@ -36,6 +39,7 @@ export default function AuthCtxProvider({ children }) {
     setAuthState({
       token: '',
       funds: {},
+      user: {},
     });
 
     localStorage.removeItem('token');
@@ -53,7 +57,7 @@ export default function AuthCtxProvider({ children }) {
     isUserLoggedIn,
     isUserAdmin,
     token: authState.token,
-
+    user: authState.user,
     login,
     logout,
     funds: authState.funds,

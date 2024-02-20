@@ -3,6 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const fundsRouter = require('./routes/fundsRoutes');
+const authRouter = require('./routes/authRoutes');
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.get('/', (req, res) => {
   res.json('Hello World!');
 });
 
+app.use('/api', authRouter);
 app.use('/api', fundsRouter);
 
 app.use((req, res) => {

@@ -8,6 +8,8 @@ import Header from './components/layout/Header';
 import CreateNewFund from './pages/CreateNewFund';
 import FundsList from './pages/FundsList';
 import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 
 export default function App() {
   return (
@@ -18,6 +20,8 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/funds" element={<FundsList />} />
         <Route path="/create-fund" element={<CreateNewFund />} />
+        <Route path="/auth/login" element={<LoginPage />} />
+        <Route path="/auth/register" element={<RegisterPage />} />
       </Routes>
     </div>
   );
