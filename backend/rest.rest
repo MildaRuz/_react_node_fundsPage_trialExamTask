@@ -1,7 +1,7 @@
 ### main  page
 GET http://localhost:3000/
 
-### all funds
+### get all funds
 GET http://localhost:3000/api/funds
 
 ### get one
@@ -19,7 +19,7 @@ Content-Type: application/json
   "img_url": "https://picsum.photos/id/43/800/600"
 }
 
-### update student
+### update idea
 PUT http://localhost:3000/api/funds/7
 Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiamFuZUBiaXQubHQiLCJzY29wZSI6Im1hbmFnZXIifSwiaWF0IjoxNzA4NDMwNjk2LCJleHAiOjE3MDg0MzQyOTZ9.xVyrJRhDLAxWLL3_onopirPqvshdF2BvD53yJEOawBs

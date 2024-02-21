@@ -16,6 +16,28 @@ const validateJWTToken = async (req, res, next) => {
   }
 };
 
+const mainErrroHandler = (errorGot, req, res, next) => {
+  console.log('errorGot ===', errorGot);
+
+  // patikrinti ar atejo APIError
+  // if (errorGot instanceof APIError) {
+  //   return res.status(errorGot.status).json({
+  //     error: errorGot.message,
+  //   });
+  // }
+
+  if (errorGot?.code === 'ER_DUP_ENTRY') {
+    return res.status(400).json({
+      error: 'Email already taken',
+    });
+  }
+
+  res.status(500).json({
+    error: 'System errror',
+  });
+};
+
 module.exports = {
   validateJWTToken,
+  mainErrroHandler,
 };

@@ -54,7 +54,7 @@ const register = async (req, res, next) => {
   const [resObj, error] = await makeSqlQuery(sql, [name, email, passwordHash]);
 
   if (error) {
-    console.log('register error ====');
+    console.log('register error ====', error);
     return next(error);
   }
 
