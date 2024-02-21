@@ -16,14 +16,14 @@ export default function DonatePage() {
 
   const { idea_id } = useParams();
 
-  const { token } = useAuthContext();
+  const { user, token } = useAuthContext();
 
   const [fundsList, setFundsList] = useAPIData(`${baseApiUrl}funds/${idea_id}`);
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      author_name: fundsList.author_name ?? '',
+      author_name: user.name ?? '',
       donation_sum: '',
     },
     validationSchema: Yup.object({
@@ -68,7 +68,7 @@ export default function DonatePage() {
                   id="author_name"
                   name="author_name"
                   className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-green-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-500 sm:text-sm sm:leading-6"
-                  value={formik.values.author}
+                  value={formik.values.author_name}
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                 ></input>

@@ -16,7 +16,7 @@ export default function CreateNewFund() {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      img_url: '',
+      img_url: 'https://picsum.photos/id/15/800/600',
       idea_name: '',
       author_name: '',
       description: '',

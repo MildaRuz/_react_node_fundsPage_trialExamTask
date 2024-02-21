@@ -89,7 +89,7 @@ export default function FundsList() {
               <div className="text-green-400 font-bold">{fund.idea_name}</div>
               <div className="py-2">by {fund.author_name}</div>
               <div className="text-sm">Raise funds: {fund.rise_funds}</div>
-              <div className="text-sm py-2">Description: {fund.description}</div>
+              <div className="text-sm py-2 min-h-16">Description: {fund.description}</div>
 
               <div className="flex gap-2">
                 <button
@@ -101,14 +101,13 @@ export default function FundsList() {
               </div>
               {isUserAdmin && (
                 <>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => handleEdit(fund.idea_id)}
-                      className="bg-green-400 hover:bg-green-700 text-green-950 font-bold mt-2 py-2 px-4 rounded-md"
-                    >
-                      Edit info
-                    </button>
-                  </div>
+                  <button
+                    onClick={() => handleEdit(fund.idea_id)}
+                    className="bg-green-400 hover:bg-green-700 text-green-950 font-bold mt-2 py-2 px-4 rounded-md mr-2"
+                  >
+                    Edit info
+                  </button>
+
                   <button
                     onClick={() => handleDelete(fund.idea_id)}
                     className="bg-red-400 hover:bg-red-700 text-red-950 font-bold mt-2 py-2 px-3 rounded-md"
