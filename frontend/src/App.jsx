@@ -6,6 +6,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import Header from './components/layout/Header';
 import CreateNewFund from './pages/CreateNewFund';
+import DonatePage from './pages/DonatePage';
 import EditFund from './pages/EditFundPage';
 import FundsList from './pages/FundsList';
 import HomePage from './pages/HomePage';
@@ -21,6 +22,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/funds" element={<FundsList />} />
+        <Route path="/donate-fund/:idea_id" element={<DonatePage />} />
         <Route path="/create-fund" element={<CreateNewFund />} />
         <Route path="/auth/login" element={<LoginPage />} />
         <Route path="/auth/register" element={<RegisterPage />} />

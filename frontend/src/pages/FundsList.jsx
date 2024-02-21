@@ -15,7 +15,7 @@ export default function FundsList() {
   const [fundsList, setFundsList] = useAPIData(fundsUrl);
   const [filterValue, setFilterValue] = useState('');
 
-  const { isUserAdmin, token } = useAuthContext();
+  const { isUserAdmin, token, isUserLoggedIn } = useAuthContext();
 
   const navigate = useNavigate();
 
@@ -38,9 +38,15 @@ export default function FundsList() {
         console.warn('handleDelete ivyko klaida:', error.response);
       });
   }
+
   function handleDonate(id) {
-    navigate(`/donate-fund/${id}`);
+    if (!isUserLoggedIn) {
+      navigate(`/auth/login`);
+    } else {
+      navigate(`/donate-fund/${id}`);
+    }
   }
+
   function handleEdit(id) {
     navigate(`/edit-fund/${id}`);
   }
@@ -78,7 +84,7 @@ export default function FundsList() {
         {fundsList.map((fund) => (
           <div key={fund.idea_id} className="grid grid-cols-1 gap-2 border-2 border-green-100 justify-between p-3">
             <div className="">
-              <img className="size-img block mx-auto" src={fund.img_url} />
+              <img className="block mx-auto" src={fund.img_url} />
               <div className="py-2"></div>
               <div className="text-green-400 font-bold">{fund.idea_name}</div>
               <div className="py-2">by {fund.author_name}</div>
@@ -87,7 +93,7 @@ export default function FundsList() {
 
               <div className="flex gap-2">
                 <button
-                  onClick={() => handleDonate(fund.donated)}
+                  onClick={() => handleDonate(fund.idea_id)}
                   className="bg-green-400 hover:bg-green-700 text-green-950 font-bold py-2 px-4 rounded-md"
                 >
                   Donate
