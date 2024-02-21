@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api', authRouter);
-app.use('/api', validateJWTToken, fundsRouter);
+app.use('/api', fundsRouter);
 
 app.use((req, res) => {
   res.status(404).json({

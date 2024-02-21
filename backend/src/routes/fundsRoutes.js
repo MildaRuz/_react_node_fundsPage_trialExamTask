@@ -2,6 +2,7 @@ const express = require('express');
 
 const fundsRouter = express.Router();
 const fundsController = require('../controllers/fundsController');
+const { validateJWTToken } = require('../middleware');
 
 // routes
 
@@ -15,9 +16,9 @@ fundsRouter.get('/funds/:idea_id', fundsController.getSingle);
 fundsRouter.post('/funds', fundsController.create);
 
 // PuT /api/funds - update
-fundsRouter.put('/funds/:idea_id', fundsController.update);
+fundsRouter.put('/funds/:idea_id', validateJWTToken, fundsController.update);
 
 // DELETE /api/funds - delete
-fundsRouter.delete('/funds/:idea_id', fundsController.delete);
+fundsRouter.delete('/funds/:idea_id', validateJWTToken, fundsController.delete);
 
 module.exports = fundsRouter;
