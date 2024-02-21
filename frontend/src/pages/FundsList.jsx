@@ -3,6 +3,7 @@ import '../index.css';
 import axios from 'axios';
 import React from 'react';
 import { useMemo, useState } from 'react';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
 import useAPIData from '../hooks/useAPIData';

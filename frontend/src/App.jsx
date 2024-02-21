@@ -11,6 +11,7 @@ import FundsList from './pages/FundsList';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import AdminPrivateRoute from './PrivateRoutes/AdminPrivateRoute';
 
 export default function App() {
   return (
@@ -23,7 +24,14 @@ export default function App() {
         <Route path="/create-fund" element={<CreateNewFund />} />
         <Route path="/auth/login" element={<LoginPage />} />
         <Route path="/auth/register" element={<RegisterPage />} />
-        <Route path="/edit-fund/:idea_id" element={<EditFund />} />
+        <Route
+          path="/edit-fund/:idea_id"
+          element={
+            <AdminPrivateRoute>
+              <EditFund />
+            </AdminPrivateRoute>
+          }
+        />
       </Routes>
     </div>
   );

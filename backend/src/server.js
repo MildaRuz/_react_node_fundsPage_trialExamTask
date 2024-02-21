@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const fundsRouter = require('./routes/fundsRoutes');
 const authRouter = require('./routes/authRoutes');
+const { validateJWTToken } = require('./middleware');
 
 const app = express();
 
@@ -18,7 +19,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api', authRouter);
-app.use('/api', fundsRouter);
+app.use('/api', validateJWTToken, fundsRouter);
 
 app.use((req, res) => {
   res.status(404).json({
