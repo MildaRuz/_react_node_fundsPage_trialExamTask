@@ -4,6 +4,7 @@ GET http://localhost:3000/
 ### get all funds
 GET http://localhost:3000/api/funds
 
+
 ### get one
 GET http://localhost:3000/api/funds/1
 
@@ -12,10 +13,10 @@ POST http://localhost:3000/api/funds
 Content-Type: application/json
 
 {
-  "author_name": "Mantas",
+  "author_name": "Jake",
   "idea_name": "Save trees",
   "description": "Save trees. Be green. Donate. Breath.",
-  "rise_funds": "20000",
+  "rise_funds": "10000",
   "img_url": "https://picsum.photos/id/43/800/600"
 }
 
@@ -29,11 +30,12 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiamFu
   "idea_name": "Donate me for my course",
   "description": "Please donate for my JavaScript course",
   "rise_funds": "2500",
-  "img_url": "https://picsum.photos/id/223/800/600"
+  "img_url": "https://picsum.photos/id/223/800/600",
+  "admin_comnfirmation": 0
 }
 
 ### delete single idea
-DELETE http://localhost:3000/api/funds/8
+DELETE http://localhost:3000/api/funds/15
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiamFuZUBiaXQubHQiLCJzY29wZSI6Im1hbmFnZXIifSwiaWF0IjoxNzA4NDMwNjk2LCJleHAiOjE3MDg0MzQyOTZ9.xVyrJRhDLAxWLL3_onopirPqvshdF2BvD53yJEOawBs
 
 ### Registration

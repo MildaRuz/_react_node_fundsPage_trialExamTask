@@ -7,7 +7,7 @@ async function makeSqlQuery(sql, argArr = []) {
   let connection;
   try {
     connection = await mysql.createConnection(dbConfig);
-    console.log('connnn =====', connection);
+    //console.log('connnn =====', connection);
     const [rows] = await connection.execute(sql, argArr);
     return [rows, null];
   } catch (error) {

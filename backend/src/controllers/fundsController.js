@@ -1,8 +1,25 @@
+const { jwtSecret } = require('../config');
+const jwt = require('jsonwebtoken');
 const { makeSqlQuery } = require('../helpers');
+
+function getUserFromToken(token) {
+  try {
+    jwt.verify(token, jwtSecret);
+    const tokenData = jwt.decode(token);
+    return tokenData.user;
+  } catch (error) {
+    console.log(error);
+    throw new Error('Token Invalid', 401, error);
+  }
+}
 
 module.exports = {
   getAll: async (req, res, next) => {
-    const sql = 'SELECT * FROM `collect_funds`';
+    const token = req.header('Authorization');
+
+    const user = token ? getUserFromToken(token) : undefined;
+
+    const sql = `SELECT * FROM collect_funds ${user?.scope === 'admin' ? '' : 'WHERE admin_confirmation=1'}`;
 
     const [itemsArr, error] = await makeSqlQuery(sql);
 
@@ -37,8 +54,8 @@ module.exports = {
     const { author_name, idea_name, description, rise_funds, img_url } = req.body;
 
     const argArr = [author_name, idea_name, description, rise_funds, img_url];
-    const sql = `INSERT INTO collect_funds (author_name, idea_name, description, rise_funds, img_url) 
-    VALUES (?,?,?,?,?)`;
+    const sql = `INSERT INTO collect_funds (author_name, idea_name, description, rise_funds, img_url, admin_confirmation) 
+    VALUES (?,?,?,?,?, false)`;
 
     const [resObj, error] = await makeSqlQuery(sql, argArr);
 
@@ -61,10 +78,10 @@ module.exports = {
   update: async (req, res, next) => {
     const { idea_id } = req.params;
 
-    const { author_name, idea_name, description, rise_funds, img_url } = req.body;
+    const { author_name, idea_name, description, rise_funds, img_url, admin_confirmation } = req.body;
 
     const sql =
-      'UPDATE `collect_funds` SET `author_name`=?, `idea_name`=?, `description`=?, `rise_funds`=?, `img_url` = ? WHERE `idea_id`= ?';
+      'UPDATE `collect_funds` SET `author_name`=?, `idea_name`=?, `description`=?, `rise_funds`=?, `img_url` = ?, `admin_confirmation`=? WHERE `idea_id`= ?';
 
     const [responseObject, error] = await makeSqlQuery(sql, [
       author_name,
@@ -72,6 +89,7 @@ module.exports = {
       description,
       rise_funds,
       img_url,
+      admin_confirmation,
       idea_id,
     ]);
 
@@ -81,6 +99,10 @@ module.exports = {
 
     if (responseObject.affectedRows !== 1) {
       return next('Something wrong with fund edit', error);
+    }
+
+    if (admin_confirmation === 1) {
+      return res.json({ message: 'Fund allready confirmed' });
     }
 
     res.status(200).json({

@@ -61,9 +61,9 @@ export default function FundsList() {
   //   );
   // }, [fundsList, filterValue]);
 
-  const handleFilterChange = (event) => {
-    setFilterValue(event.target.value);
-  };
+  // const handleFilterChange = (event) => {
+  //   setFilterValue(event.target.value);
+  // };
 
   return (
     <div className="container mx-auto max-w-[1200px] mx-5 my-5">
@@ -85,7 +85,15 @@ export default function FundsList() {
           <div key={fund.idea_id} className="grid grid-cols-1 gap-2 border-2 border-green-100 justify-between p-3">
             <div className="">
               <img className="block mx-auto" src={fund.img_url} />
-              <div className="py-2"></div>
+              {isUserAdmin && (
+                <div className="py-2">
+                  {fund.admin_confirmation === 1 ? (
+                    <span className="text-green-600 font-bold">Confirmed</span>
+                  ) : (
+                    <span className="text-red-600 font-bold">Pending approval</span>
+                  )}
+                </div>
+              )}
               <div className="text-green-400 font-bold">{fund.idea_name}</div>
               <div className="py-2">by {fund.author_name}</div>
               <div className="text-sm">Raise funds: {fund.rise_funds}</div>
@@ -99,13 +107,14 @@ export default function FundsList() {
                   Donate
                 </button>
               </div>
+
               {isUserAdmin && (
                 <>
                   <button
                     onClick={() => handleEdit(fund.idea_id)}
                     className="bg-green-400 hover:bg-green-700 text-green-950 font-bold mt-2 py-2 px-4 rounded-md mr-2"
                   >
-                    Edit info
+                    Confirm or Edit fund
                   </button>
 
                   <button

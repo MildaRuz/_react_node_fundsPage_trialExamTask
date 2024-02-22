@@ -26,7 +26,6 @@ export default function LoginPage() {
       password: Yup.string().min(5).max(30).required(),
     }),
     onSubmit: (values) => {
-      console.log(values);
       sendAxiosData(values);
     },
   });
