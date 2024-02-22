@@ -75,6 +75,31 @@ module.exports = {
     });
   },
 
+  createDonation: async (req, res, next) => {
+    const { name, donated_sum, idea_id } = req.body;
+
+    const argArr = [name, donated_sum, idea_id];
+    const sql = `INSERT INTO donated (name, donated_sum, idea_id) 
+    VALUES (?,?,?)`;
+
+    const [resObj, error] = await makeSqlQuery(sql, argArr);
+
+    if (error) {
+      console.log(' donate error ===', error);
+      return next(error);
+    }
+
+    if (resObj.affectedRows !== 1) {
+      console.log('donation no rows affected', resObj);
+      return next('something went wrong in creating donation', error);
+    }
+
+    res.status(201).json({
+      id: resObj.idea_id,
+      msg: 'success',
+    });
+  },
+
   update: async (req, res, next) => {
     const { idea_id } = req.params;
 

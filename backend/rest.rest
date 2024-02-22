@@ -20,6 +20,16 @@ Content-Type: application/json
   "img_url": "https://picsum.photos/id/43/800/600"
 }
 
+### donate single
+POST http://localhost:3000/api/funds/donated
+Content-Type: application/json
+
+{
+  "name": "Jake",
+  "donated_sum": 20,
+  "idea_id": "",
+}
+
 ### update idea
 PUT http://localhost:3000/api/funds/7
 Content-Type: application/json

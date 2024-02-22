@@ -40,11 +40,7 @@ export default function FundsList() {
   }
 
   function handleDonate(id) {
-    if (!isUserLoggedIn) {
-      navigate(`/auth/login`);
-    } else {
-      navigate(`/donate-fund/${id}`);
-    }
+    navigate(`/donate-fund/${id}`);
   }
 
   function handleEdit(id) {

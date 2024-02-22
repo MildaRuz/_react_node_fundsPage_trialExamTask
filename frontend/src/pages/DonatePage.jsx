@@ -23,8 +23,9 @@ export default function DonatePage() {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      author_name: user.name ?? '',
-      donation_sum: '',
+      name: user.name ?? '',
+      donated_sum: '',
+      idea_id: fundsList.idea_id,
     },
     validationSchema: Yup.object({
       author_name: Yup.string().min(3).max(128).required('Author is required field'),
@@ -37,7 +38,7 @@ export default function DonatePage() {
 
   function sendFundData(data) {
     axios
-      .post(`${baseApiUrl}funds/donated`, data, {
+      .post(`${baseApiUrl}funds/donated/${idea_id}`, data, {
         headers: { Authorization: token },
       })
       .then((resp) => {
@@ -60,20 +61,20 @@ export default function DonatePage() {
         <div className="max-w-96 mt-4 border-2 border-green-300 rounded-md p-4 flex justify-center">
           <form onSubmit={formik.handleSubmit}>
             <div className="sm:col-span-3">
-              <label htmlFor="author_name" className="block text-sm font-medium leading-6 text-gray-900">
-                Author Name
+              <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
+                Your Name
               </label>
               <div className="mt-2">
                 <input
-                  id="author_name"
-                  name="author_name"
+                  id="name"
+                  name="name"
                   className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-green-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-500 sm:text-sm sm:leading-6"
-                  value={formik.values.author_name}
+                  value={formik.values.name}
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                 ></input>
-                {formik.touched['author_name'] && formik.errors['author_name'] && (
-                  <p className="text-red-600">{formik.errors['author_name']}</p>
+                {formik.touched['name'] && formik.errors['name'] && (
+                  <p className="text-red-600">{formik.errors['name']}</p>
                 )}
               </div>
             </div>

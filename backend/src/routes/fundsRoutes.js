@@ -15,6 +15,8 @@ fundsRouter.get('/funds/:idea_id', fundsController.getSingle);
 // POST /api/funds - create
 fundsRouter.post('/funds', fundsController.create);
 
+fundsRouter.post('/funds/donated', fundsController.createDonation);
+
 // PuT /api/funds - update
 fundsRouter.put('/funds/:idea_id', validateJWTToken, fundsController.update);
 
