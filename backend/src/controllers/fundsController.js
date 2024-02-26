@@ -19,7 +19,11 @@ module.exports = {
 
     const user = token ? getUserFromToken(token) : undefined;
 
-    const sql = `SELECT * FROM collect_funds ${user?.scope === 'admin' ? '' : 'WHERE admin_confirmation=1'}`;
+    const sql = `SELECT cf.*, d.total_sum, cf.rise_funds=d.total_sum AS goalReached FROM collect_funds cf LEFT JOIN (SELECT d.idea_id AS id, SUM(d.donated_sum) as total_sum FROM donated d GROUP BY d.idea_id) d ON cf.idea_id = d.id ${
+      user?.scope === 'admin' ? '' : 'WHERE cf.admin_confirmation=1'
+    } ORDER BY goalReached`;
+
+    //const sql = `SELECT * FROM collect_funds ${user?.scope === 'admin' ? '' : 'WHERE admin_confirmation=1'}`;
 
     const [itemsArr, error] = await makeSqlQuery(sql);
 

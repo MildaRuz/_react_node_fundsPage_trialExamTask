@@ -29,6 +29,9 @@ Content-Type: application/json
   "donated_sum": 5
 }
 
+### get one
+GET http://localhost:3000/api/funds/donated/10
+
 ### update idea
 PUT http://localhost:3000/api/funds
 Content-Type: application/json

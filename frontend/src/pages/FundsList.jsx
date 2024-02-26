@@ -13,6 +13,7 @@ const fundsUrl = 'http://localhost:3000/api/funds';
 
 export default function FundsList() {
   const [fundsList, setFundsList] = useAPIData(fundsUrl);
+
   const [filterValue, setFilterValue] = useState('');
 
   const { isUserAdmin, token, isUserLoggedIn } = useAuthContext();
@@ -93,8 +94,10 @@ export default function FundsList() {
               <div className="text-green-400 font-bold">{fund.idea_name}</div>
               <div className="py-2">by {fund.author_name}</div>
               <div className="text-sm">Raise funds: {fund.rise_funds}</div>
-              <div className="text-sm">Already collected: </div>
-              <div className="text-sm">Left to the goal: </div>
+              <div className="text-sm">
+                Already collected: <span className="text-green-500">{fund.total_sum ? `${fund.total_sum}` : 0}</span>
+              </div>
+              <div className="text-sm">Left to the goal: {fund.rise_funds - fund.total_sum} </div>
               <div className="text-sm py-2 min-h-16">Description: {fund.description}</div>
 
               <div className="flex gap-2">
