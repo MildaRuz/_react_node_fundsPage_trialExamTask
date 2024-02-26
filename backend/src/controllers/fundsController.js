@@ -98,7 +98,7 @@ module.exports = {
 
     res.status(201).json({
       id: resObj.idea_id,
-      msg: `Successfuly donated for ${idea_id} fund`,
+      msg: `Successfuly donated`,
     });
   },
 

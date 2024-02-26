@@ -25,17 +25,17 @@ export default function DonatePage() {
     initialValues: {
       name: '',
       donated_sum: '',
-      idea_id: fundsList.idea_id,
     },
     validationSchema: Yup.object({
-      author_name: Yup.string().min(3).max(128).required('Author is required field'),
+      name: Yup.string().min(3).max(128).required('Author is required field'),
       donated_sum: Yup.string().min(1).required('Donation sum is required'),
     }),
     onSubmit: (values) => {
-      values = { ...values, idea_id };
       sendFundData(values);
     },
   });
+
+  console.log('errrrooooorrrs', formik.errors);
 
   function sendFundData(data) {
     axios
@@ -44,10 +44,11 @@ export default function DonatePage() {
       })
       .then((resp) => {
         navigate('/funds');
-        toast.success('Donated successfuly');
+        toast.success(`Donated successfuly for ${fundsList.idea_name} fund`);
       })
       .catch((error) => toast.error(error.resp));
   }
+
   return (
     <div className="container mx-5 my-5 ">
       <h1 className="text-4xl mb-4 ">

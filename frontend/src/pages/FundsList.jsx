@@ -93,6 +93,8 @@ export default function FundsList() {
               <div className="text-green-400 font-bold">{fund.idea_name}</div>
               <div className="py-2">by {fund.author_name}</div>
               <div className="text-sm">Raise funds: {fund.rise_funds}</div>
+              <div className="text-sm">Already collected: </div>
+              <div className="text-sm">Left to the goal: </div>
               <div className="text-sm py-2 min-h-16">Description: {fund.description}</div>
 
               <div className="flex gap-2">
