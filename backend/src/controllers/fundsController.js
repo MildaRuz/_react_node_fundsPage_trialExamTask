@@ -76,7 +76,9 @@ module.exports = {
   },
 
   createDonation: async (req, res, next) => {
-    const { name, donated_sum, idea_id } = req.body;
+    const { idea_id } = req.params;
+
+    const { name, donated_sum } = req.body;
 
     const argArr = [name, donated_sum, idea_id];
     const sql = `INSERT INTO donated (name, donated_sum, idea_id) 
@@ -96,7 +98,7 @@ module.exports = {
 
     res.status(201).json({
       id: resObj.idea_id,
-      msg: 'success',
+      msg: `Successfuly donated for ${idea_id} fund`,
     });
   },
 

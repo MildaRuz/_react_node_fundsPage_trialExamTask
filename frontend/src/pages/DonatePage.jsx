@@ -23,15 +23,16 @@ export default function DonatePage() {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      name: user.name ?? '',
+      name: '',
       donated_sum: '',
       idea_id: fundsList.idea_id,
     },
     validationSchema: Yup.object({
       author_name: Yup.string().min(3).max(128).required('Author is required field'),
-      donation_sum: Yup.string().min(1).required('Donation sum is required'),
+      donated_sum: Yup.string().min(1).required('Donation sum is required'),
     }),
     onSubmit: (values) => {
+      values = { ...values, idea_id };
       sendFundData(values);
     },
   });
@@ -80,20 +81,20 @@ export default function DonatePage() {
             </div>
 
             <div className="sm:col-span-3">
-              <label htmlFor="donation_sum" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="donated_sum" className="block text-sm font-medium leading-6 text-gray-900">
                 Donation sum
               </label>
               <div className="mt-2">
                 <input
-                  id="donation_sum"
-                  name="donation_sum"
+                  id="donated_sum"
+                  name="donated_sum"
                   className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-green-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-500 sm:text-sm sm:leading-6"
-                  value={formik.values.donation_sum}
+                  value={formik.values.donated_sum}
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                 ></input>
-                {formik.touched['donation_sum'] && formik.errors['donation_sum'] && (
-                  <p className="text-red-600">{formik.errors['donation_sum']}</p>
+                {formik.touched['donated_sum'] && formik.errors['donated_sum'] && (
+                  <p className="text-red-600">{formik.errors['donated_sum']}</p>
                 )}
               </div>
             </div>

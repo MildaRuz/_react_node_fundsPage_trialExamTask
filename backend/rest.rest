@@ -21,17 +21,16 @@ Content-Type: application/json
 }
 
 ### donate single
-POST http://localhost:3000/api/funds/donated
+POST http://localhost:3000/api/funds/donated/12
 Content-Type: application/json
 
 {
   "name": "Jake",
-  "donated_sum": 20,
-  "idea_id": "",
+  "donated_sum": 5
 }
 
 ### update idea
-PUT http://localhost:3000/api/funds/7
+PUT http://localhost:3000/api/funds
 Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiamFuZUBiaXQubHQiLCJzY29wZSI6Im1hbmFnZXIifSwiaWF0IjoxNzA4NDMwNjk2LCJleHAiOjE3MDg0MzQyOTZ9.xVyrJRhDLAxWLL3_onopirPqvshdF2BvD53yJEOawBs
 
