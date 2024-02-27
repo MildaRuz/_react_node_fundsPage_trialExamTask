@@ -20,10 +20,12 @@ export default function DonatePage() {
 
   const [fundsList, setFundsList] = useAPIData(`${baseApiUrl}funds/${idea_id}`);
 
+  console.log('user', user);
+
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      name: '',
+      name: user?.name || '',
       donated_sum: '',
     },
     validationSchema: Yup.object({

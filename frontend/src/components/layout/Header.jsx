@@ -10,7 +10,7 @@ export default function Header() {
 
   function handleLogout() {
     logout();
-    navigate('/login');
+    navigate('/auth/login');
   }
 
   return (

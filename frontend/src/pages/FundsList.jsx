@@ -18,8 +18,6 @@ export default function FundsList() {
 
   const { isUserAdmin, token } = useAuthContext();
 
-  console.log('funds===', fundsList);
-
   const navigate = useNavigate();
 
   function handleDelete(id) {
@@ -102,7 +100,9 @@ export default function FundsList() {
               )}
               <div className="text-green-400 font-bold">{fund.idea_name}</div>
               <div className="py-2">by {fund.author_name}</div>
-              <div className="text-lg">Goal: {fund.rise_funds}</div>
+              <div className="text-lg">
+                Goal: <span className="font-bold">{fund.rise_funds}</span>
+              </div>
               <div className="text-sm">
                 Already collected: <span className="text-green-500">{fund.total_sum ? `${fund.total_sum}` : 0}</span>
               </div>
