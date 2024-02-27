@@ -16,7 +16,9 @@ export default function FundsList() {
 
   const [filterValue, setFilterValue] = useState('');
 
-  const { isUserAdmin, token, isUserLoggedIn } = useAuthContext();
+  const { isUserAdmin, token } = useAuthContext();
+
+  console.log('funds===', fundsList);
 
   const navigate = useNavigate();
 
@@ -79,7 +81,14 @@ export default function FundsList() {
       </div> */}
       <div className="grid grid-cols-3 gap-4 border-2 border-green-500 p-4">
         {fundsList.map((fund) => (
-          <div key={fund.idea_id} className="grid grid-cols-1 gap-2 border-2 border-green-100 justify-between p-3">
+          <div
+            key={fund.idea_id}
+            className={
+              fund.goalReached === 1
+                ? 'bg-gradient-to-r from-emerald-200 grid grid-cols-1 gap-2 border-2 border-green-100 justify-between p-3'
+                : 'grid grid-cols-1 gap-2 border-2 border-green-100 justify-between p-3'
+            }
+          >
             <div className="">
               <img className="block mx-auto" src={fund.img_url} />
               {isUserAdmin && (
@@ -93,22 +102,28 @@ export default function FundsList() {
               )}
               <div className="text-green-400 font-bold">{fund.idea_name}</div>
               <div className="py-2">by {fund.author_name}</div>
-              <div className="text-sm">Raise funds: {fund.rise_funds}</div>
+              <div className="text-lg">Goal: {fund.rise_funds}</div>
               <div className="text-sm">
                 Already collected: <span className="text-green-500">{fund.total_sum ? `${fund.total_sum}` : 0}</span>
               </div>
-              <div className="text-sm">Left to the goal: {fund.rise_funds - fund.total_sum} </div>
+              {fund.goalReached === 1 ? (
+                ''
+              ) : (
+                <div className="text-sm">Left to the goal: {fund.rise_funds - fund.total_sum} </div>
+              )}
               <div className="text-sm py-2 min-h-16">Description: {fund.description}</div>
-
-              <div className="flex gap-2">
-                <button
-                  onClick={() => handleDonate(fund.idea_id)}
-                  className="bg-green-400 hover:bg-green-700 text-green-950 font-bold py-2 px-4 rounded-md"
-                >
-                  Donate
-                </button>
-              </div>
-
+              {fund.goalReached === 1 ? (
+                <span className="text-2xl text-green-700 font-bold">Goal reached!</span>
+              ) : (
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleDonate(fund.idea_id)}
+                    className="bg-green-400 hover:bg-green-700 text-green-950 font-bold py-2 px-4 rounded-md"
+                  >
+                    Donate
+                  </button>
+                </div>
+              )}
               {isUserAdmin && (
                 <>
                   <button
